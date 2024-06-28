@@ -7,7 +7,6 @@ const pathLib = require('path');
 const ENTRY_FILE = './src/App.tsx';
 const OUTPUT_FILE = './analyze.json';
 
-
 // Recursive function to traverse the AST of a component
 function traverseComponent(filePath) {
   const sourceCode = fs.readFileSync(filePath, 'utf-8');
@@ -29,8 +28,6 @@ function traverseComponent(filePath) {
 
         if (specifier.type === 'ImportSpecifier') {
           functions[name] = { source };
-        } else if (specifier.type === 'ImportDefaultSpecifier') {
-          components.push({ name, source });
         }
       });
     },
@@ -55,7 +52,14 @@ function traverseComponent(filePath) {
       }
 
       if (fs.existsSync(childFilePath)) {
-        components.push({ name, source: childFilePath, ...traverseComponent(childFilePath) });
+        const existingComponent = components.find((component) => component.name === name);
+        if (existingComponent) {
+          const { components: childComponents, functions: childFunctions } = traverseComponent(childFilePath);
+          existingComponent.components = mergeComponents(existingComponent.components, childComponents);
+          existingComponent.functions = { ...existingComponent.functions, ...childFunctions };
+        } else {
+          components.push({ name, source: childFilePath, ...traverseComponent(childFilePath) });
+        }
       } else {
         components.push({ name });
       }
@@ -65,6 +69,20 @@ function traverseComponent(filePath) {
   return { components, functions };
 }
 
+// Helper function to merge components arrays
+function mergeComponents(components1, components2) {
+  const mergedComponents = [...components1];
+  components2.forEach((component) => {
+    const existingComponent = mergedComponents.find((c) => c.name === component.name);
+    if (existingComponent) {
+      existingComponent.components = mergeComponents(existingComponent.components, component.components);
+      existingComponent.functions = { ...existingComponent.functions, ...component.functions };
+    } else {
+      mergedComponents.push(component);
+    }
+  });
+  return mergedComponents;
+}
 const result = traverseComponent(ENTRY_FILE);
 console.log(result)
 
