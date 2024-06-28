@@ -20,7 +20,7 @@ $ bun run watch
 ```
 
 ### output
-> analyze.json
+> [analyze.json](https://jsonblob.com/1256189437246562304)
 
 
 ### Known bugs
