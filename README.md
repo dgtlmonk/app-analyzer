@@ -1,5 +1,5 @@
 # App Analyzer 
-A simple script that analyze and mapp App's imports to their corresponding components.
+A starter script that analyze and mapp App's imports to their corresponding components.
 
 ### Use Case
 - You want to see how your App's imports are mapped to their corresponding components.
@@ -7,7 +7,7 @@ A simple script that analyze and mapp App's imports to their corresponding compo
 - See if there's opportunity to optimize your imports.
 - Visualize everything!
 
-### What's next?
+### Opportunities
 - Visualization
 
 ### Install dependencies
@@ -21,3 +21,9 @@ $ bun run watch
 
 ### output
 > analyze.json
+
+
+### Known bugs
+ - Component alias is not supported yet. 
+ - 
+

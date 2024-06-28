@@ -3,16 +3,25 @@
     {
       "name": "TestComponent",
       "source": "/Users/dgtlmonk/lab/js/react/ast-parser/src/TestComponent.tsx",
+      "params": {
+        "s": {
+          "value": "hello",
+          "type": "string"
+        }
+      },
       "components": [
         {
-          "name": "div"
+          "name": "div",
+          "params": {}
         },
         {
           "name": "TestComponent2",
           "source": "/Users/dgtlmonk/lab/js/react/ast-parser/src/TestComponent2.tsx",
+          "params": {},
           "components": [
             {
-              "name": "div"
+              "name": "div",
+              "params": {}
             }
           ],
           "functions": {
@@ -22,7 +31,8 @@
           }
         },
         {
-          "name": "button"
+          "name": "button",
+          "params": {}
         }
       ],
       "functions": {
@@ -43,9 +53,11 @@
     {
       "name": "TestComponent2",
       "source": "/Users/dgtlmonk/lab/js/react/ast-parser/src/TestComponent2.tsx",
+      "params": {},
       "components": [
         {
-          "name": "div"
+          "name": "div",
+          "params": {}
         }
       ],
       "functions": {

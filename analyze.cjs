@@ -1,4 +1,5 @@
 
+
 const fs = require('fs');
 const parser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
@@ -39,9 +40,7 @@ function traverseComponent(filePath) {
 
     JSXElement(nodePath) {
       const name = nodePath.node.openingElement.name.name;
-      const importDeclaration = nodePath.findParent((parent) => {
-        return parent.node.type === 'ImportDeclaration';
-      });
+      const importDeclaration = nodePath.findParent((parent) => parent.node.type === 'ImportDeclaration');
       let childFilePath;
 
       if (importDeclaration) {
@@ -58,10 +57,11 @@ function traverseComponent(filePath) {
           existingComponent.components = mergeComponents(existingComponent.components, childComponents);
           existingComponent.functions = { ...existingComponent.functions, ...childFunctions };
         } else {
-          components.push({ name, source: childFilePath, ...traverseComponent(childFilePath) });
+          const params = getComponentParams(nodePath);
+          components.push({ name, source: childFilePath, params, ...traverseComponent(childFilePath) });
         }
       } else {
-        components.push({ name });
+        components.push({ name, params: {} });
       }
     },
   });
@@ -83,8 +83,38 @@ function mergeComponents(components1, components2) {
   });
   return mergedComponents;
 }
+
+// Helper function to get component parameters
+function getComponentParams(nodePath) {
+  const params = {};
+  const attributes = nodePath.node.openingElement.attributes;
+  attributes.forEach((attribute) => {
+    if (attribute.type === 'JSXAttribute') {
+      const name = attribute.name.name;
+      let value = null;
+      let type = null;
+      if (attribute.value) {
+        if (attribute.value.type === 'StringLiteral') {
+          value = attribute.value.value;
+          type = 'string';
+        } else if (attribute.value.type === 'JSXExpressionContainer') {
+          if (attribute.value.expression.type === 'NumericLiteral') {
+            value = attribute.value.expression.value;
+            type = 'number';
+          } else if (attribute.value.expression.type === 'BooleanLiteral') {
+            value = attribute.value.expression.value;
+            type = 'boolean';
+          }
+        }
+      }
+      params[name] = { value, type };
+    }
+  });
+  return params;
+}
+
 const result = traverseComponent(ENTRY_FILE);
-console.log(result)
+console.log(result);
 
 // Write the result to a JSON file
 fs.writeFileSync(OUTPUT_FILE, JSON.stringify(result, null, 2));
