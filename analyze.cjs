@@ -29,6 +29,8 @@ function traverseComponent(filePath) {
 
         if (specifier.type === 'ImportSpecifier') {
           functions[name] = { source };
+        } else if (specifier.type === 'ImportDefaultSpecifier') {
+          components.push({ name, source });
         }
       });
     },
@@ -41,12 +43,10 @@ function traverseComponent(filePath) {
     JSXElement(nodePath) {
       const name = nodePath.node.openingElement.name.name;
       const importDeclaration = nodePath.findParent((parent) => {
-        return parent.type === 'ImportDeclaration'
+        return parent.node.type === 'ImportDeclaration';
       });
       let childFilePath;
 
-
-      // console.log('ImportDeclaration :: ', nodePath.node.openingElement)
       if (importDeclaration) {
         const source = importDeclaration.node.source.value;
         childFilePath = pathLib.resolve(pathLib.dirname(filePath), source);
@@ -55,7 +55,7 @@ function traverseComponent(filePath) {
       }
 
       if (fs.existsSync(childFilePath)) {
-        components.push({ name, ...traverseComponent(childFilePath) });
+        components.push({ name, source: childFilePath, ...traverseComponent(childFilePath) });
       } else {
         components.push({ name });
       }
@@ -65,7 +65,6 @@ function traverseComponent(filePath) {
   return { components, functions };
 }
 
-// Traverse the AST of the entry file
 const result = traverseComponent(ENTRY_FILE);
 console.log(result)
 

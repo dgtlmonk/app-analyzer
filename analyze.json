@@ -2,12 +2,26 @@
   "components": [
     {
       "name": "TestComponent",
+      "source": "./components/TestComponent"
+    },
+    {
+      "name": "TestComponent2",
+      "source": "./components/TestComponent2"
+    },
+    {
+      "name": "TestComponent",
+      "source": "/Users/dgtlmonk/lab/js/react/ast-parser/src/TestComponent.tsx",
       "components": [
+        {
+          "name": "TestComponent2",
+          "source": "./TestComponent2"
+        },
         {
           "name": "div"
         },
         {
           "name": "TestComponent2",
+          "source": "/Users/dgtlmonk/lab/js/react/ast-parser/src/TestComponent2.tsx",
           "components": [
             {
               "name": "div"
@@ -40,6 +54,7 @@
     },
     {
       "name": "TestComponent2",
+      "source": "/Users/dgtlmonk/lab/js/react/ast-parser/src/TestComponent2.tsx",
       "components": [
         {
           "name": "div"

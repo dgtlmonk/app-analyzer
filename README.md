@@ -1,6 +1,6 @@
-# App Import Mapper
+# App Analyzer 
 
-A simple script that maps App's imports to their corresponding components.
+A simple script that analyze and mapp App's imports to their corresponding components.
 
 
 ### Use Case
@@ -9,6 +9,6 @@ A simple script that maps App's imports to their corresponding components.
 - See if there's opportunity to optimize your imports.
 
 
-### Scaling
+### What's next?
 - Visualization
 

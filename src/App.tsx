@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import TestComponent from "./TestComponent"
-import TestComponent2 from "./TestComponent2";
+import TestComponent from "./components/TestComponent"
+import TestComponent2 from "./components/TestComponent2";
 import { testFn } from "./lib/test";
 
 
