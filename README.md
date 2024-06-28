@@ -24,6 +24,6 @@ $ bun run watch
 
 
 ### Known bugs
- - Component alias is not supported yet. 
- - 
+ - Component alias is not supported yet
+ - A LOT :D
 
