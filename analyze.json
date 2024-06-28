@@ -1,0 +1,69 @@
+{
+  "components": [
+    {
+      "name": "TestComponent",
+      "components": [
+        {
+          "name": "div"
+        },
+        {
+          "name": "TestComponent2",
+          "components": [
+            {
+              "name": "div"
+            }
+          ],
+          "functions": {
+            "heyTextComponent2": {
+              "type": "in-line"
+            }
+          }
+        },
+        {
+          "name": "button"
+        }
+      ],
+      "functions": {
+        "useEffect": {
+          "source": "react"
+        },
+        "testFn": {
+          "source": "./lib/test"
+        },
+        "add": {
+          "type": "in-line"
+        },
+        "heyTestComponent": {
+          "type": "in-line"
+        }
+      }
+    },
+    {
+      "name": "TestComponent2",
+      "components": [
+        {
+          "name": "div"
+        }
+      ],
+      "functions": {
+        "heyTextComponent2": {
+          "type": "in-line"
+        }
+      }
+    }
+  ],
+  "functions": {
+    "useEffect": {
+      "source": "react"
+    },
+    "testFn": {
+      "source": "./lib/test"
+    },
+    "heyApp": {
+      "type": "in-line"
+    },
+    "App": {
+      "type": "in-line"
+    }
+  }
+}
